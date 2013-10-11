@@ -4,11 +4,20 @@
 (require '[clojure.string :as str])
 
 (defn getGameJson [pathToFile]
-	(json/read-str (slurp pathToFile)
-                :key-fn keyword)
+	(json/read-str
+		(slurp 
+			pathToFile
+		)
+        :key-fn keyword
+    )
 )
-(def game (:game (getGameJson "wwf_game.json")))
+
+(def game 	
+	(getGameJson
+		"data/wwf_test_game.json"
+	)
+)
 
 (defn -main []
-nil 
+	nil
 )
