@@ -1,0 +1,14 @@
+scrabbot
+========
+# app
+Bot for Zynga's Words with friends in Clojure
+
+## Usage
+
+FIXME: write
+
+## License
+
+Copyright (C) 2013 FIXME
+
+Distributed under the Eclipse Public License, the same as Clojure.
