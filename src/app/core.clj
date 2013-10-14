@@ -12,11 +12,15 @@
     )
 )
 
-(def game 	
-	(getGameJson
-		"data/wwf_test_game.json"
+(def game
+	(
+		:game
+		(getGameJson
+			"./data/wwf_test_game.json"
+		)
 	)
 )
+
 
 (defn -main []
 	nil
