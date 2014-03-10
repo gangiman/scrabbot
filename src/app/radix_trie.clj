@@ -3,23 +3,30 @@
 (use 'clojure.java.io)
 (use 'clojure.pprint)
 
-(println "Loading names... ")
-(time (def names
-    (with-open 
-      [rdr (reader 
-            "/usr/share/dict/ProperNames")]
-      (map string/lower-case 
-           (doall 
-            (take 30000 (line-seq rdr)))))))
+;(println "Loading names... ")
+; (time (def names
+;     (with-open 
+;       [rdr (reader 
+;             "/usr/share/dict/ProperNames")]
+;       (map string/lower-case 
+;            (doall 
+;             (take 30000 (line-seq rdr)))))))
 
-(println "Loading words... ")
-(time (def words
-    (with-open 
-      [rdr (reader 
-            "/usr/share/dict/words")]
-      (map string/lower-case 
-           (doall 
-            (line-seq rdr))))))
+;(println "Loading words... ")
+; (time (def words
+;     (with-open 
+;       [rdr (reader 
+;             "/usr/share/dict/words")]
+;       (map string/lower-case 
+;            (doall 
+;             (line-seq rdr))))))
+
+(defn read_words_from_file [filename]
+     (with-open 
+       [rdr (reader filename)]
+       (map string/lower-case 
+            (doall (line-seq rdr)))))
+
 
 ;; From closure.contrib, but missing from clojure 1.4.0 for some reason.
 (defn dissoc-in
@@ -101,15 +108,15 @@
           tree (get (lookup-tree T word) 0)]
           (take limit (reverse (assemble-nodes tree word)))))
             
-(println "Building names trie... ")
-(time (def N (reduce insert {} names)))
+; (println "Building names trie... ")
+; (time (def N (reduce insert {} names)))
 
-(println "Building words trie... ")
-(time (def W (reduce insert {} words)))
+; (println "Building words trie... ")
+; (time (def W (reduce insert {} words)))
 
-(pprint (lookup N "Al"))
-(pprint (lookup N "Bo"))
-(pprint (lookup W "Intell" :limit 3))
-(pprint (lookup W "Ear" :limit 3))
+; (pprint (lookup N "Al"))
+; (pprint (lookup N "Bo"))
+; (pprint (lookup W "Intell" :limit 3))
+; (pprint (lookup W "Ear" :limit 3))
 
 
