@@ -5,26 +5,26 @@
 
 ;(println "Loading names... ")
 ; (time (def names
-;     (with-open 
-;       [rdr (reader 
+;     (with-open
+;       [rdr (reader
 ;             "/usr/share/dict/ProperNames")]
-;       (map string/lower-case 
-;            (doall 
+;       (map string/lower-case
+;            (doall
 ;             (take 30000 (line-seq rdr)))))))
 
 ;(println "Loading words... ")
 ; (time (def words
-;     (with-open 
-;       [rdr (reader 
+;     (with-open
+;       [rdr (reader
 ;             "/usr/share/dict/words")]
-;       (map string/lower-case 
-;            (doall 
+;       (map string/lower-case
+;            (doall
 ;             (line-seq rdr))))))
 
 (defn read_words_from_file [filename]
-     (with-open 
+     (with-open
        [rdr (reader filename)]
-       (map string/lower-case 
+       (map string/lower-case
             (doall (line-seq rdr)))))
 
 
@@ -42,23 +42,23 @@
           (dissoc m k)))
       m)
     (dissoc m k)))
-    
+
 (defn word-seq
     [word]
     (map-indexed (fn [i l] (subs word 0 (inc i))) word))
 
 (defn lookup-tree
     [T word & {:keys [parentKeys] :or {parentKeys []}}]
-    (if-let 
+    (if-let
         [matchedPrefix (first (filter (fn [prefix] (get T prefix)) (word-seq word)))]
         (let [subT (get T matchedPrefix)]
             ; (println "Match: " matchedPrefix (get T matchedPrefix) (conj parentKeys matchedPrefix))
-            (lookup-tree subT 
-                (subs word (count matchedPrefix)) 
+            (lookup-tree subT
+                (subs word (count matchedPrefix))
                 :parentKeys (conj parentKeys matchedPrefix)))
         (do ;(println "No match: " word)
             [T (conj parentKeys word)])))
-            
+
 (defn common-prefix-length
     [word1 word2]
     (loop [i 0]
@@ -70,7 +70,7 @@
     [subT parentKeys]
     ; (println "Common siblings? " (keys subT) parentKeys)
     (if-let [siblingKeys (keys subT)]
-        (if-let [sibling (first (filter 
+        (if-let [sibling (first (filter
                                  (fn [key] (< 0 (common-prefix-length key (last parentKeys))))
                                  siblingKeys))]
             sibling)))
@@ -107,7 +107,7 @@
     (let [word (string/lower-case word)
           tree (get (lookup-tree T word) 0)]
           (take limit (reverse (assemble-nodes tree word)))))
-            
+
 ; (println "Building names trie... ")
 ; (time (def N (reduce insert {} names)))
 

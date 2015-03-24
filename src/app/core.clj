@@ -15,6 +15,6 @@
 
 
 (defn -main []
-	(def D_trie (reduce radix/insert {} 
+	(def D_trie (reduce radix/insert {}
 		(radix/read_words_from_file "data/full_word_list.csv")))
 	(time (pprint (radix/lookup D_trie "hel"))))
